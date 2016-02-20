@@ -14,6 +14,11 @@ class Udacidata
     product
   end
 
+  def self.all
+    csv = CSV.read(@data_path)
+    csv.map { |p| new(id: p[0], brand: p[1], name: p[2], price: p[3]) }
+  end
+
   def self.product_in_csv?(id)
     csv = CSV.read(@data_path)
     csv.find { |p| id == p[0] }
