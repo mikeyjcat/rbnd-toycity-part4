@@ -3,29 +3,33 @@ require_relative '../lib/product'
 require_relative '../data/seeds'
 
 class TestUdacidata < MiniTest::Test
-
   def setup
-    @data_path = File.dirname(__FILE__) + "/../data/data.csv"
-    CSV.open(@data_path, "wb") do |csv|
-      csv << ["id", "brand", "product", "price"]
+    @data_path = File.dirname(__FILE__) + '/../data/data.csv'
+    CSV.open(@data_path, 'wb') do |csv|
+      csv << %w(id brand product price)
     end
+    # puts @data_path
+    # puts 'got here'
     db_seed
   end
 
   def test_create_method_adds_to_database
     before = CSV.read(@data_path).length
+    # puts before
     5.times do
-      Product.create(brand: "WalterToys", name: "Sticky Notes", price: 34.00)
+      Product.create(brand: 'WalterToys', name: 'Sticky Notes', price: 34.00)
     end
     after = CSV.read(@data_path).length
+    # puts after
     assert(after == before + 5)
   end
 
-  # def test_create_method_returns_product_object
-  #    product = Product.create(brand: "ColtToys", name: "Orchid Plant", price: 2.00)
-  #    assert_instance_of(Product, product)
-  # end
-  #
+  def test_create_method_returns_product_object
+    product = Product.create(brand: 'ColtToys', name: 'Orchid Plant',
+                             price: 2.00)
+    assert_instance_of(Product, product)
+  end
+
   # def test_all_method_returns_array_data_type
   #   array_of_products = Product.all
   #   assert_kind_of(Array, array_of_products)
