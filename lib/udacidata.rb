@@ -19,6 +19,11 @@ class Udacidata
     csv.map { |p| new(id: p[0], brand: p[1], name: p[2], price: p[3]) }
   end
 
+  def self.first
+    csv = CSV.read(@data_path).drop(1)
+    new(id: csv[0][0], brand: csv[0][1], name: csv[0][2], price: csv[0][3])
+  end
+
   def self.product_in_csv?(id)
     csv = CSV.read(@data_path)
     csv.find { |p| id == p[0] }

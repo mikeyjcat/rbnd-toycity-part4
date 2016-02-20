@@ -6,12 +6,10 @@ class Product < Udacidata
   def initialize(opts={})
     # Get last ID from the database if ID exists
     get_last_id
-    # puts "last id #{@@count_class_instances}"
     # Set the ID if it was passed in, otherwise use last existing ID
     @id = opts[:id] ? opts[:id].to_i : @@count_class_instances
     # Increment ID by 1
     auto_increment unless opts[:id]
-    # puts "last id #{@@count_class_instances}"
     # Set the brand, name, and price normally
     @brand = opts[:brand]
     @name = opts[:name]
