@@ -27,6 +27,14 @@ class Udacidata
     n == 1 ? products[0] : products
   end
 
+  def self.last(n = 1)
+    csv = CSV.read(@data_path).drop(1)
+    products = csv.last(n).map do |p|
+      new(id: p[0], brand: p[1], name: p[2], price: p[3])
+    end
+    n == 1 ? products[0] : products
+  end
+
   def self.product_in_csv?(id)
     csv = CSV.read(@data_path)
     csv.find { |p| id == p[0] }

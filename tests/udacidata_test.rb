@@ -8,19 +8,15 @@ class TestUdacidata < MiniTest::Test
     CSV.open(@data_path, 'wb') do |csv|
       csv << %w(id brand product price)
     end
-    # puts @data_path
-    # puts 'got here'
     db_seed
   end
 
   def test_create_method_adds_to_database
     before = CSV.read(@data_path).length
-    # puts before
     5.times do
       Product.create(brand: 'WalterToys', name: 'Sticky Notes', price: 34.00)
     end
     after = CSV.read(@data_path).length
-    # puts after
     assert(after == before + 5)
   end
 
@@ -58,6 +54,7 @@ class TestUdacidata < MiniTest::Test
     assert_kind_of(Array, array_of_products)
   end
 
+<<<<<<< c86b2a3c50b3e40e4e43cf3a18bec96de074858c
   # def test_first_n_returns_correct_products
   #   array_of_products = Product.first(3)
   #   data = CSV.read(@data_path).drop(1)
@@ -92,6 +89,44 @@ class TestUdacidata < MiniTest::Test
   #   assert_equal(3, array_of_products.size)
   # end
   #
+=======
+  def test_first_n_returns_correct_products
+    array_of_products = Product.first(3)
+    data = CSV.read(@data_path).drop(1)
+    array_of_products.each_with_index do |product, index|
+      assert_equal(data[index][0].to_i, product.id)
+    end
+  end
+
+  def test_first_n_returns_correct_number_of_products
+    array_of_products = Product.first(3)
+    assert_equal(3, array_of_products.size)
+  end
+
+  def test_last_method_returns_product_object
+    product = Product.last
+    assert_instance_of(Product, product)
+  end
+
+  def test_last_method_returns_correct_product
+    product = Product.last
+    data = CSV.read(@data_path).drop(1)
+    assert_equal(data.last[0].to_i, product.id)
+  end
+
+  def test_last_n_returns_array_type
+    array_of_products = Product.last(3)
+    # data = CSV.read(@data_path)
+    assert_kind_of(Array, array_of_products)
+  end
+
+  def test_last_n_returns_correct_number_of_products
+    array_of_products = Product.last(3)
+    # data = CSV.read(@data_path)
+    assert_equal(3, array_of_products.size)
+  end
+
+>>>>>>> Added and tested last and last n method
   # def test_find_method_returns_correct_product
   #   product = Product.find(5)
   #   assert_equal(5, product.id)
