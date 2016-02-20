@@ -6,17 +6,22 @@ class Udacidata
   def self.create(opts = nil)
     product = new(id: opts[:id], brand: opts[:brand], name: opts[:name],
                   price: opts[:price])
-    # puts "product #{product}"
     @data_path = File.dirname(__FILE__) + '/../data/data.csv'
-    csv = CSV.read(@data_path)
-    # puts "product id #{product.id}"
-    # puts "csv read #{csv}"
-    unless csv.find { |p| product.id == p[0] }
-      CSV.open(@data_path, 'a') do |new_csv|
-        # new_csv << csv
-        new_csv << [product.id, opts[:brand], opts[:name], opts[:price]]
-      end
+
+    unless product_in_csv?(product.id)
+      add_product_to_csv([product.id, opts[:brand], opts[:name], opts[:price]])
     end
     product
+  end
+
+  def self.product_in_csv?(id)
+    csv = CSV.read(@data_path)
+    csv.find { |p| id == p[0] }
+  end
+
+  def self.add_product_to_csv(product)
+    CSV.open(@data_path, 'a') do |new_csv|
+      new_csv << product
+    end
   end
 end
