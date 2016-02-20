@@ -15,13 +15,16 @@ class Udacidata
   end
 
   def self.all
-    csv = CSV.read(@data_path)
+    csv = CSV.read(@data_path).drop(1)
     csv.map { |p| new(id: p[0], brand: p[1], name: p[2], price: p[3]) }
   end
 
-  def self.first
+  def self.first(n = 1)
     csv = CSV.read(@data_path).drop(1)
-    new(id: csv[0][0], brand: csv[0][1], name: csv[0][2], price: csv[0][3])
+    products = csv.first(n).map do |p|
+      new(id: p[0], brand: p[1], name: p[2], price: p[3])
+    end
+    n == 1 ? products[0] : products
   end
 
   def self.product_in_csv?(id)
