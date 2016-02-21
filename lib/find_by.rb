@@ -14,13 +14,12 @@ class Module
 
           unless record
             fail ToyCityErrors::ProductNotFoundError,
-                 "#{attribute} : key does not exist"
+                 "#{attribute} : \#{key} does not exist"
           end
 
           create_object_from_array(record)
         end
         }
-        puts new_method
 
       # Pass variable into class_eval as an argument
       self.class_eval(new_method)

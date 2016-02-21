@@ -1,6 +1,5 @@
 require_relative 'udacidata'
 
-# TODO: define instance variable for data path and remove from everywhere possible
 class Product < Udacidata
   attr_reader :id, :price, :brand, :name
 
