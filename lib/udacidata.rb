@@ -37,6 +37,13 @@ class Udacidata
     n == 1 ? records[0] : records
   end
 
+  # return an array of records that match the supplied criteria
+  def self.where(opts = nil)
+    csv = CSV.read(@data_path).drop(1) # skip header
+    records = csv.map { |r| create_object_from_array(r) }
+    records.select { |r| r.send(opts.to_a[0][0]) == opts.to_a[0][1] }
+  end
+
   # find record by id
   def self.find(id)
     csv = CSV.read(@data_path)

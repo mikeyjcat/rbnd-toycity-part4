@@ -88,7 +88,6 @@ class TestUdacidata < MiniTest::Test
   #   assert_equal(3, array_of_products.size)
   # end
   #
-
   # def test_find_method_returns_correct_product
   #   product = Product.find(5)
   #   assert_equal(5, product.id)
