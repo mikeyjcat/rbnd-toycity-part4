@@ -19,7 +19,7 @@ class TestAnalyzable < MiniTest::Test
     p1 = Product.create(brand: "AverageBrand", name: "Nyan Cat", price: 15.32)
     p2 = Product.create(brand: "AverageBrand", name: "Nyan Cat", price: 18.23)
     p3 = Product.create(brand: "AverageBrand", name: "Nyan Cat", price: 11.30)
-    avg = Analyzable::average_price(Product.where(brand: "AverageBrand"))
+    avg = Analyzable.average_price(Product.where(brand: "AverageBrand"))
     assert_equal(14.95, avg)
   end
 
@@ -28,13 +28,13 @@ class TestAnalyzable < MiniTest::Test
   #   assert_kind_of(String, report)
   # end
   #
-  # def test_count_by_brand_method_returns_hash
-  #   Product.create(brand: "FindMyBrand", name: "Skateboard", price: "11.30")
-  #   expected = { "FindMyBrand" => 1 }
-  #   actual = Analyzable::count_by_brand(Product.where(brand: "FindMyBrand"))
-  #   assert_equal(expected, actual)
-  # end
-  #
+  def test_count_by_brand_method_returns_hash
+    Product.create(brand: 'FindMyBrand', name: 'Skateboard', price: '11.30')
+    expected = { 'FindMyBrand' => 1 }
+    actual = Analyzable.count_by_brand(Product.where(brand: 'FindMyBrand'))
+    assert_equal(expected, actual)
+  end
+  
   # def test_count_by_name_method_returns_hash
   #   Product.create(brand: "Lego", name: "FindMyName", price: "11.30")
   #   expected = { "FindMyName" => 1 }
