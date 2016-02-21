@@ -57,9 +57,20 @@ class Udacidata
     create_object_from_array(record)
   end
 
+  # TODO: make class generic
+  def update(opts = nil)
+    record = { id: id, brand: brand, name: name, price: price }
+    opts.each_pair { |k, v| record[k] = v } # update hash with supplied data
+    array = record.to_a.map { |p| p[1] } # convert hash to array
+
+    self.class.destroy(id) # remove existing record
+    self.class.add_record_to_csv(array) # add updated record
+    self.class.create_object_from_array(array) # return updated object
+  end
+
   # remove the record matching the provied key
   def self.destroy(id)
-    record = self.find(id)  # save record for returning
+    record = find(id) # save record for returning
 
     # read all records excluding the one to be deleted
     csv = CSV.read(@data_path)
