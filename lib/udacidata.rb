@@ -17,27 +17,20 @@ class Udacidata
 
   def self.all
     csv = CSV.read(@data_path).drop(1) # skip header
-    # TODO: Use create object
-    csv.map { |r| new(id: r[0], brand: r[1], name: r[2], price: r[3]) }
+    csv.map { |r| create_object_from_array(r) }
   end
 
   # return an array of the first n records (or just the first)
   def self.first(n = 1)
     csv = CSV.read(@data_path).drop(1) # skip header
-    records = csv.first(n).map do |r|
-    # TODO: Use create object
-      new(id: r[0], brand: r[1], name: r[2], price: r[3])
-    end
+    records = csv.first(n).map { |r| create_object_from_array(r) }
     n == 1 ? records[0] : records
   end
 
   # return an array of the last n records (or just the last)
   def self.last(n = 1)
     csv = CSV.read(@data_path).drop(1) # skip header
-    records = csv.last(n).map do |r|
-    # TODO: Use create object
-      new(id: r[0], brand: r[1], name: r[2], price: r[3])
-    end
+    records = csv.last(n).map { |r| create_object_from_array(r) }
 
     n == 1 ? records[0] : records
   end
@@ -51,8 +44,7 @@ class Udacidata
       fail ToyCityErrors::ProductNotFoundError, "Product :#{id} does not exist"
     end
 
-    # TODO: Use create object
-    new(id: record[0], brand: record[1], name: record[2], price: record[3])
+    create_object_from_array(record)
   end
 
   # remove the record matching the provied key
