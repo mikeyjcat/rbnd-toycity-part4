@@ -17,6 +17,7 @@ class Udacidata
 
   def self.all
     csv = CSV.read(@data_path).drop(1) # skip header
+    # TODO: Use create object
     csv.map { |r| new(id: r[0], brand: r[1], name: r[2], price: r[3]) }
   end
 
@@ -24,6 +25,7 @@ class Udacidata
   def self.first(n = 1)
     csv = CSV.read(@data_path).drop(1) # skip header
     records = csv.first(n).map do |r|
+    # TODO: Use create object
       new(id: r[0], brand: r[1], name: r[2], price: r[3])
     end
     n == 1 ? records[0] : records
@@ -33,6 +35,7 @@ class Udacidata
   def self.last(n = 1)
     csv = CSV.read(@data_path).drop(1) # skip header
     records = csv.last(n).map do |r|
+    # TODO: Use create object
       new(id: r[0], brand: r[1], name: r[2], price: r[3])
     end
 
@@ -48,6 +51,7 @@ class Udacidata
       fail ToyCityErrors::ProductNotFoundError, "Product :#{id} does not exist"
     end
 
+    # TODO: Use create object
     new(id: record[0], brand: record[1], name: record[2], price: record[3])
   end
 
@@ -66,6 +70,19 @@ class Udacidata
     record # return deleted record
   end
 
+  # find first record by brand
+  def self.find_by_brand(brand)
+    csv = CSV.read(@data_path)
+    record = csv.find { |r| brand == r[1] }
+
+    unless record
+      fail ToyCityErrors::ProductNotFoundError, "Brand :#{brand} does not exist"
+    end
+
+    create_object_from_array(record)
+  end
+
+  # helper methods
   # check if record exists (by id)
   def self.record_in_csv?(id)
     csv = CSV.read(@data_path)
@@ -76,5 +93,9 @@ class Udacidata
     CSV.open(@data_path, 'a') do |csv|
       csv << record
     end
+  end
+
+  def self.create_object_from_array(record)
+    new(id: record[0], brand: record[1], name: record[2], price: record[3])
   end
 end
