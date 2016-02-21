@@ -38,6 +38,7 @@ class Udacidata
   end
 
   # return an array of records that match the supplied criteria
+  # parameters = hash with field to find by, and value to match
   def self.where(opts = nil)
     csv = CSV.read(@data_path).drop(1) # skip header
     records = csv.map { |r| create_object_from_array(r) }
