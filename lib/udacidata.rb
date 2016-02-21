@@ -4,6 +4,8 @@ require 'csv'
 
 # TODO: Introduce error checking
 class Udacidata
+  create_finder_methods('brand', 'name')
+
   def self.create(opts = nil)
     object = new(id: opts[:id], brand: opts[:brand], name: opts[:name],
                  price: opts[:price])
@@ -63,16 +65,16 @@ class Udacidata
   end
 
   # find first record by brand
-  def self.find_by_brand(brand)
-    csv = CSV.read(@data_path)
-    record = csv.find { |r| brand == r[1] }
+  # def self.find_by_brand(brand)
+  #   csv = CSV.read(@data_path)
+  #   record = csv.find { |r| brand == r[1] }
 
-    unless record
-      fail ToyCityErrors::ProductNotFoundError, "Brand :#{brand} does not exist"
-    end
+  #   unless record
+  #     fail ToyCityErrors::ProductNotFoundError, "Brand :#{brand} does not exist"
+  #   end
 
-    create_object_from_array(record)
-  end
+  #   create_object_from_array(record)
+  # end
 
   # helper methods
   # check if record exists (by id)
