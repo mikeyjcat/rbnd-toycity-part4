@@ -18,8 +18,11 @@ class Udacidata
   end
 
   def self.all
+    @data_path = File.dirname(__FILE__) + '/../data/data.csv'
+
     csv = CSV.read(@data_path).drop(1) # skip header
-    csv.map { |r| create_object_from_array(r) }
+    # puts "i am here #{csv}"
+    csv.map { |r| create_object_from_array(r) } 
   end
 
   # return an array of the first n records (or just the first)
@@ -57,7 +60,6 @@ class Udacidata
     create_object_from_array(record)
   end
 
-  # TODO: make class generic
   def update(opts = nil)
     record = { id: id, brand: brand, name: name, price: price }
     opts.each_pair { |k, v| record[k] = v } # update hash with supplied data

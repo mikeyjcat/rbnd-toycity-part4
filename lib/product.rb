@@ -17,7 +17,11 @@ class Product < Udacidata
   end
 
   def to_s
-    "id:#{@id} brand:#{@brand} product_name:#{@name} price:#{@price}"
+    "id:#{@id} brand:#{@brand} product_name:#{@name} price:#{@price} \n"
+  end
+
+  def inspect
+    "id:#{@id} brand:#{@brand} product_name:#{@name} price:#{@price} \n"
   end
 
   private
