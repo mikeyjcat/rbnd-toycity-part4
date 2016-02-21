@@ -2,7 +2,7 @@ require_relative 'find_by'
 require_relative 'errors'
 require 'csv'
 
-# TODO: Introduce error checking and error class
+# TODO: Introduce error checking
 class Udacidata
   def self.create(opts = nil)
     object = new(id: opts[:id], brand: opts[:brand], name: opts[:name],
@@ -35,6 +35,7 @@ class Udacidata
     records = csv.last(n).map do |r|
       new(id: r[0], brand: r[1], name: r[2], price: r[3])
     end
+
     n == 1 ? records[0] : records
   end
 
@@ -42,7 +43,27 @@ class Udacidata
   def self.find(id)
     csv = CSV.read(@data_path)
     record = csv.find { |r| id == r[0].to_i }
+
+    unless record
+      fail ToyCityErrors::ProductNotFoundError, "Product :#{id} does not exist"
+    end
+
     new(id: record[0], brand: record[1], name: record[2], price: record[3])
+  end
+
+  # remove the record matching the provied key
+  def self.destroy(id)
+    record = self.find(id)  # save record for returning
+
+    # read all records excluding the one to be deleted
+    csv = CSV.read(@data_path)
+    records = csv.select { |r| id != r[0].to_i }
+    # save data to CSV
+    CSV.open(@data_path, 'w') do |file|
+      records.each { |r| file << r }
+    end
+
+    record # return deleted record
   end
 
   # check if record exists (by id)
@@ -52,8 +73,8 @@ class Udacidata
   end
 
   def self.add_record_to_csv(record)
-    CSV.open(@data_path, 'a') do |new_csv|
-      new_csv << record
+    CSV.open(@data_path, 'a') do |csv|
+      csv << record
     end
   end
 end
