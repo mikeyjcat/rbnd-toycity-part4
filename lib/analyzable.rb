@@ -4,10 +4,26 @@ module Analyzable
   end
 
   def count_by_brand(objects)
-    { objects.first.brand => objects.size }
+    results = {}
+    objects.each do |o|
+      if results[o.brand]
+        results[o.brand] = results[o.brand] + 1
+      else
+        results[o.brand] = 1
+      end
+    end
+    results
   end
 
   def count_by_name(objects)
-    { objects.first.name => objects.size }
+    results = {}
+    objects.each do |o|
+      if results[o.name]
+        results[o.name] = results[o.name] + 1
+      else
+        results[o.name] = 1
+      end
+    end
+    results
   end
 end

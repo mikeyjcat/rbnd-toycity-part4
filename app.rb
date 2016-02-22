@@ -38,9 +38,9 @@ puts
 # print Product.find(1_000_000_000_000)
 
 puts
-puts "--------------------"
-puts "RETURN FIRST PRODUCT"
-puts "--------------------"
+puts '--------------------'
+puts 'RETURN FIRST PRODUCT'
+puts '--------------------'
 print Product.first
 
 #
