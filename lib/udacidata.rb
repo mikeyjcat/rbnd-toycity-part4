@@ -2,7 +2,6 @@ require_relative 'find_by'
 require_relative 'errors'
 require 'csv'
 
-# TODO: Introduce error checking
 class Udacidata
   create_finder_methods('brand', 'name')
 
@@ -22,7 +21,7 @@ class Udacidata
 
     csv = CSV.read(@data_path).drop(1) # skip header
     # puts "i am here #{csv}"
-    csv.map { |r| create_object_from_array(r) } 
+    csv.map { |r| create_object_from_array(r) }
   end
 
   # return an array of the first n records (or just the first)

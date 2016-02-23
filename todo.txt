@@ -1,3 +1,0 @@
-Errata in app.rb
-
-seperate out data access stuff
